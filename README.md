@@ -42,3 +42,7 @@ $ npm run build
 ```
 $ npm start
 ```
+
+or
+
+VSCode launch config included ... Enjoy)
