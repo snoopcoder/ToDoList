@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
-import "./App.css";
+import "./app.css";
 import _ from "lodash";
 import TodoCreate from "./todo-create";
 import TodoList from "./todo-list";
