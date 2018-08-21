@@ -8,7 +8,6 @@ const crud = {
     try {
       const res = await pool.query(text, values);
       id = res.rows[0].id;
-      console.log(res.rows[0]);
     } catch (err) {
       console.log(err.stack);
     }
@@ -22,7 +21,6 @@ const crud = {
     try {
       const res = await pool.query(text, values);
       id = res.rows[0].id;
-      console.log(res.rows[0]);
     } catch (err) {
       console.log(err.stack);
     }
@@ -38,7 +36,6 @@ const crud = {
     try {
       const res = await pool.query(text, values);
       id = res.rows[0].id;
-      console.log(res.rows[0]);
     } catch (err) {
       console.log(err);
     }
@@ -56,7 +53,6 @@ const crud = {
     try {
       const res = await pool.query(text, values);
       tasks = res.rows;
-      console.log(res.rows[0]);
     } catch (err) {
       console.log(err.stack);
     }
@@ -73,7 +69,6 @@ const crud = {
     try {
       const res = await pool.query(text, values);
       tasks = res.rows;
-      console.log(res.rows[0]);
     } catch (err) {
       console.log(err.stack);
     }

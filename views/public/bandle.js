@@ -60781,7 +60781,7 @@ var App = function (_Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.LoadData = function () {
-      fetch("http://127.0.0.1/tasks?sort=" + _this.state.order).then(function (response) {
+      fetch("/tasks?sort=" + _this.state.order).then(function (response) {
         return response.json();
       }).then(function (data) {
         _this.setState({ todos: data });
@@ -60791,7 +60791,7 @@ var App = function (_Component) {
     };
 
     _this.UserWho = function () {
-      fetch("http://127.0.0.1/user").then(function (response) {
+      fetch("/user").then(function (response) {
         return response.json();
       }).then(function (data) {
         _this.setState({ user: data });
@@ -60816,7 +60816,7 @@ var App = function (_Component) {
       };
 
       console.log("Posting request to API...");
-      fetch("http://127.0.0.1/tasks", {
+      fetch("/tasks", {
         method: "post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(task)
@@ -60895,7 +60895,7 @@ var App = function (_Component) {
         task: task,
         iscompleted: false
       };
-      fetch("http://127.0.0.1/tasks", {
+      fetch("/tasks", {
         method: "post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(taskObj)
@@ -60921,7 +60921,7 @@ var App = function (_Component) {
         return todo.task === taskToDeleteText;
       });
       this.setState({ todos: this.state.todos });
-      fetch("http://127.0.0.1/task?id=" + taskToDelete.id, {
+      fetch("/task?id=" + taskToDelete.id, {
         method: "delete"
       }).then(function (response) {
         return response.json();
@@ -60949,7 +60949,7 @@ var App = function (_Component) {
         foundTodo.iscompleted = iscompleted;
       }
       //необходимо данные обновить. так как мог измениться порядок сортировки
-      fetch("http://127.0.0.1/task", {
+      fetch("/task", {
         method: "put",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(foundTodo)

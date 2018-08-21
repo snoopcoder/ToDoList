@@ -1,7 +1,5 @@
--- Database: tasklist
 
--- DROP DATABASE tasklist;
-
+--Создание  базы
 CREATE DATABASE tasklist
     WITH 
     OWNER = postgres
@@ -10,14 +8,13 @@ CREATE DATABASE tasklist
     LC_CTYPE = 'ru_RU.UTF-8'
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1;
-
-
--- Table: public.roles
-
+	
+	
+--Создание таблицы ролей
 CREATE TABLE public.roles
 (
     caption character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    id integer NOT NULL DEFAULT nextval('roles_id_seq'::regclass),
+    id SERIAL NOT NULL,
     CONSTRAINT pk_roles PRIMARY KEY (id)
 )
 WITH (
@@ -29,14 +26,18 @@ ALTER TABLE public.roles
     OWNER to postgres;
 	
 
--- Table: public.users
+
+
+
+--Создание таблицы пользователей
 
 CREATE TABLE public.users
 (
     role integer NOT NULL,
-    name character varying(50) COLLATE pg_catalog."cv_RU.utf8" NOT NULL DEFAULT USER,
+    name character varying(50) COLLATE pg_catalog."cv_RU.utf8" NOT NULL,
     pass character varying(50) COLLATE pg_catalog."default",
-    id integer NOT NULL DEFAULT nextval('users_id_seq'::regclass),
+    id SERIAL NOT NULL,
+    salt character varying(50) COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT pk_users PRIMARY KEY (id),
     CONSTRAINT uk_name UNIQUE (name)
 ,
@@ -53,24 +54,19 @@ TABLESPACE pg_default;
 ALTER TABLE public.users
     OWNER to postgres;
 
--- Index: fki_rolo_id
-
--- DROP INDEX public.fki_rolo_id;
 
 CREATE INDEX fki_rolo_id
     ON public.users USING btree
     (role)
     TABLESPACE pg_default;
-
 	
--- Table: public.tasks
-
+--Создание таблицы с задачами
 
 CREATE TABLE public.tasks
 (
     task text COLLATE pg_catalog."default" NOT NULL,
     owner integer NOT NULL,
-    id integer NOT NULL DEFAULT nextval('tasks_id_seq'::regclass),
+    id SERIAL NOT NULL,
     iscompleted boolean NOT NULL,
     priority integer NOT NULL,
     CONSTRAINT pk_tasks PRIMARY KEY (id),
@@ -89,11 +85,23 @@ TABLESPACE pg_default;
 ALTER TABLE public.tasks
     OWNER to postgres;
 
--- Index: fki_fk_users
 
--- DROP INDEX public.fki_fk_users;
 
 CREATE INDEX fki_fk_users
     ON public.tasks USING btree
     (owner)
-    TABLESPACE pg_default;	
+    TABLESPACE pg_default;
+
+
+	
+--создание ролей 
+
+INSERT INTO roles (caption) VALUES('admins');
+INSERT INTO roles (caption) VALUES('users');
+
+
+	
+--создание админа
+INSERT INTO users (name, pass,role,salt) VALUES('admin', '22e8585dabda9499272e2a1842f0d2d2','1','bf52de0249a5fb33487b5cb458449d6a');
+
+

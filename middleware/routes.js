@@ -2,15 +2,9 @@ let passport = require("koa-passport");
 const fs = require("fs");
 let Task = require("../models/task");
 let User = require("../models/user");
+let Group = require("../models/group");
 
 module.exports = require("koa-router")()
-  // .get('/user', function*() {
-  //     this.body = 'user root'
-  // })
-  // .get('/user/:id', function*() {
-  //     this.body = 'hello user ' + this.params.id
-  // })
-  // .routes()
 
   //Неправильный вход в систему
   .get("/oops_login", function(ctx) {
@@ -32,9 +26,9 @@ module.exports = require("koa-router")()
     "/sign",
     //мидлваре создание нового пользователя
     async function(ctx, next) {
-      console.log(ctx.request.body);
       let { username, password } = ctx.request.body;
-      let user_id = await User.create(username, password, 2);
+      let group = await Group.search("users");
+      let user_id = await User.create(username, password, group.id); //если ролей будет много зарезервирован 3 параметр
       if (!user_id) {
         ctx.redirect("/oops_sigin");
       }
@@ -97,20 +91,11 @@ module.exports = require("koa-router")()
 
   //Выдать информацию о пользователе
   .get("/user", async function(ctx) {
-    //let task = ctx.request.body;
-    //task.owner = 1;
-    //let user = await User.create("scode", "test", "1");
-    //let user = await Task.getAll(false);
-
-    //!!!!!!!!!!!
     user = {
       name: ctx.req.user.name,
       role: ctx.req.user.role
     };
-    // user = {
-    //   name: "admin",
-    //   role: "admins"
-    // };
+
     ctx.type = "json";
     ctx.body = JSON.stringify(user);
   })
