@@ -5,8 +5,6 @@
 ToDoList with Koa + PostgreSQL and React client (Testing work)<br>
 ToDoList на Koa +PostgreSQL и клиентом на React
 
-[LiveDemo](http://scode.ml)
-
 ## DB create
 DB create scripts in \install folder
 
